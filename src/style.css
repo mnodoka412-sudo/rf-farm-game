@@ -2,9 +2,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  touch-action: none; /* スマホのスクロール・ジェスチャー操作を無効化 */
-  user-select: none;  /* テキスト選択動作を無効化 */
+  /* タップ時のダブルタップ拡大・ピンチズーム・デフォルトジェスチャーを完全無効化 */
+  touch-action: none;
+  /* 連打時にテキストやボタンが選択・青強調されるのを防止 */
+  user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body, html {
@@ -12,6 +16,8 @@ body, html {
   height: 100%;
   overflow: hidden;
   background-color: #000;
+  /* スマホでのバウンススクロール防止 */
+  position: fixed;
 }
 
 #app {

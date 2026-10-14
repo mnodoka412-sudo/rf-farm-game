@@ -158,10 +158,27 @@ function resetJoystick(e) {
 window.addEventListener('pointerup', resetJoystick);
 window.addEventListener('pointercancel', resetJoystick);
 
+// アクションボタン（決定ボタン）の連打・拡大防止イベント
 actionBtn.addEventListener('pointerdown', (e) => {
-  e.preventDefault();
+  e.preventDefault(); // ダブルタップ拡大や長押しメニューを防止
   handleAction();
 });
+
+// ダブルタップによる拡大（iOS Safari対策）を強制防止
+document.addEventListener('touchstart', (e) => {
+  if (e.touches.length > 1) {
+    e.preventDefault(); // 2本指ピンチズームを防止
+  }
+}, { passive: false });
+
+let lastTouchTime = 0;
+document.addEventListener('touchend', (e) => {
+  const now = Date.now();
+  if (now - lastTouchTime <= 300) {
+    e.preventDefault(); // 0.3秒以内のダブルタップ拡大を防止
+  }
+  lastTouchTime = now;
+}, false);
 
 // --------------------------------------------------
 // 1. シーン・カメラ・レンダラーの設定
